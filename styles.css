@@ -1,36 +1,86 @@
+html {
+  font-family: "Roboto Condensed", sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  background-color: #e8e8e8;
+}
+
+.calC {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mainContainer {
+  flex: 1 1 auto;
+}
+
 .main {
+  margin: auto;
+  margin-top: 100px;
   padding: 20px;
-  width: 500px;
-  height: 800px;
-  background-color: blue;
+  width: 400px;
+  height: 595px;
+  background-color: #10344b;
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 24px;
 }
 
 .display {
+  display: flex;
+  justify-content: end;
   margin: auto;
-  width: 500px;
-  height: 150px;
-  background-color: white;
+  width: 360px;
+  height: 75px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  color: #1d2731;
+  border-radius: 5px;
+  font-size: 32px;
 }
 
 .clearAndDelete {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 60px;
   display: flex;
   padding-top: 20px;
   flex-wrap: wrap;
   gap: 20px;
+  font-size: 22px;
 }
 
 .clear,
 .delete {
-  width: 240px;
-  height: 70px;
-}
-
-.clear {
-  background-color: aquamarine;
+  width: 190px;
+  height: 60px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .delete {
-  background-color: aqua;
+  background-color: #237bc9;
+}
+
+.delete:hover {
+  background-color: #1681df;
+  transform: scale(1.015);
+}
+
+.clear {
+  background-color: #d34553;
+}
+
+.clear:hover {
+  background-color: #db3445;
+  transform: scale(1.015);
 }
 
 .lineOne,
@@ -58,7 +108,57 @@
 .zero,
 .equal,
 .plus {
-  width: 120px;
-  height: 120px;
-  background-color: antiquewhite;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 80px;
+  width: 85px;
+  height: 80px;
+  background-color: #1b4056;
+  border-radius: 2.5px;
+  cursor: pointer;
+}
+
+.seven:hover,
+.eight:hover,
+.nine:hover,
+.four:hover,
+.five:hover,
+.six:hover,
+.one:hover,
+.two:hover,
+.three:hover,
+.point:hover,
+.zero:hover {
+  background-color: #1a4c69;
+  transform: scale(1.03);
+}
+
+.plus,
+.sub,
+.multiply,
+.divide {
+  background-color: #ffc400;
+}
+
+.plus:hover,
+.sub:hover,
+.multiply:hover,
+.divide:hover {
+  background-color: #ffcc00;
+  transform: scale(1.03);
+}
+
+.equal {
+  background-color: rgb(154, 236, 40);
+}
+
+.equal:hover {
+  background-color: rgb(157, 250, 27);
+  transform: scale(1.03);
+}
+
+.copyright {
+  flex: 0 1 10px;
+  font-size: 18px;
+  text-align: center;
 }

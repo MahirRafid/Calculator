@@ -41,9 +41,16 @@ function operate(func, a, b) {
 let values = [];
 let temp = [];
 let sign = [];
+let ansFlag = 0;
 
 function pushValue(val) {
   temp.push(val);
+  flag = 1;
+  if (ansFlag) {
+    display.textContent = "";
+    ansFlag = 0;
+  }
+  display.textContent += temp[temp.length - 1];
 }
 
 let ans = 0;
@@ -51,27 +58,41 @@ let ans = 0;
 function updateLastValue(temp) {
   temp = +temp.join("");
   values.push(temp);
-  temp = [];
+  // console.log(values);
 }
 
 function operate(sign) {
-  updateLastValue(temp);
-  let len = values.length;
-  let a = values[len - 2];
-  let b = values[len - 1];
-  console.log(sign, a, b);
+  let a = values[0];
+  let b = values[1];
   if (sign == "+") ans = a + b;
   else if (sign == "-") ans = a - b;
   else if (sign == "*") ans = a * b;
   else ans = a / b;
-  console.log(ans);
+  values.splice(0, 2);
+  values.unshift(ans);
 }
 
 function updateSign(val) {
   temp = +temp.join("");
   values.push(temp);
+  flag = 0;
   temp = [];
   sign.push(val);
+  display.textContent += ` ${sign[sign.length - 1]} `;
+}
+
+function clearAll() {
+  values = [];
+  sign = [];
+  ans = 0;
+}
+
+let flag = -1;
+
+function deleteElement() {
+  if (flag == -1) return;
+  if (flag) temp.pop();
+  sign.pop();
 }
 
 oneBtn.addEventListener("click", (e) => pushValue(1));
@@ -84,10 +105,33 @@ sevenBtn.addEventListener("click", (e) => pushValue(7));
 eightBtn.addEventListener("click", (e) => pushValue(8));
 nineBtn.addEventListener("click", (e) => pushValue(9));
 zeroBtn.addEventListener("click", (e) => pushValue(0));
-
+pointBtn.addEventListener("click", (e) => pushValue("."));
 adBtn.addEventListener("click", (e) => updateSign("+"));
 subBtn.addEventListener("click", (e) => updateSign("-"));
 multiplyBtn.addEventListener("click", (e) => updateSign("*"));
 divideBtn.addEventListener("click", (e) => updateSign("/"));
+clearBtn.addEventListener("click", (e) => clearAll());
+deleteBtn.addEventListener("click", (e) => deleteElement());
 
-equalBtn.addEventListener("click", (e) => operate(sign[sign.length - 1]));
+equalBtn.addEventListener("click", (e) => {
+  updateLastValue(temp);
+  temp = [];
+  console.log(values);
+  console.log(sign);
+  let len = sign.length;
+  for (let i = 0; i < len; i++) {
+    console.log("before : " + values);
+    operate(sign[i]);
+    console.log("after : " + values);
+  }
+
+  display.textContent += ` = ${values[0]}`;
+  ansFlag = 1;
+  values = [];
+  sign = [];
+});
+
+let copyRight = document.querySelector(".copyright");
+let currentYear = new Date().getFullYear();
+console.log(currentYear);
+copyRight.innerHTML = `<p>Copyright&nbsp;&nbsp;©&nbsp;&nbsp;Mahir Mosleh&nbsp;&nbsp;${currentYear}</p>`;
