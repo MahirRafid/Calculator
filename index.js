@@ -39,16 +39,27 @@ function operate(func, a, b) {
 }
 
 let values = [];
-let sign = "";
+let temp = [];
+let sign = [];
 
 function pushValue(val) {
-  if (values.length == 2) values.shift();
-  values.push(val);
+  temp.push(val);
 }
 
 let ans = 0;
 
-function operate(sign, a, b) {
+function updateLastValue(temp) {
+  temp = +temp.join("");
+  values.push(temp);
+  temp = [];
+}
+
+function operate(sign) {
+  updateLastValue(temp);
+  let len = values.length;
+  let a = values[len - 2];
+  let b = values[len - 1];
+  console.log(sign, a, b);
   if (sign == "+") ans = a + b;
   else if (sign == "-") ans = a - b;
   else if (sign == "*") ans = a * b;
@@ -57,7 +68,10 @@ function operate(sign, a, b) {
 }
 
 function updateSign(val) {
-  sign = val;
+  temp = +temp.join("");
+  values.push(temp);
+  temp = [];
+  sign.push(val);
 }
 
 oneBtn.addEventListener("click", (e) => pushValue(1));
@@ -76,4 +90,4 @@ subBtn.addEventListener("click", (e) => updateSign("-"));
 multiplyBtn.addEventListener("click", (e) => updateSign("*"));
 divideBtn.addEventListener("click", (e) => updateSign("/"));
 
-equalBtn.addEventListener("click", (e) => operate(sign, values[0], values[1]));
+equalBtn.addEventListener("click", (e) => operate(sign[sign.length - 1]));
