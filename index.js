@@ -17,6 +17,8 @@ let divideBtn = document.querySelector(".divide");
 let clearBtn = document.querySelector(".clear");
 let deleteBtn = document.querySelector(".delete");
 let display = document.querySelector(".display");
+let displayOne = document.querySelector(".displayOne");
+let displayTwo = document.querySelector(".displayTwo");
 
 function add(a, b) {
   return a + b;
@@ -47,10 +49,11 @@ function pushValue(val) {
   temp.push(val);
   flag = 1;
   if (ansFlag) {
-    display.textContent = "";
+    displayOne.textContent = "";
+    displayTwo.textContent = "";
     ansFlag = 0;
   }
-  display.textContent += temp[temp.length - 1];
+  displayOne.textContent += temp[temp.length - 1];
 }
 
 let ans = 0;
@@ -66,7 +69,7 @@ function operate(sign) {
   let b = values[1];
   if (sign == "+") ans = a + b;
   else if (sign == "-") ans = a - b;
-  else if (sign == "*") ans = a * b;
+  else if (sign == "x") ans = a * b;
   else ans = a / b;
   values.splice(0, 2);
   values.unshift(ans);
@@ -78,30 +81,37 @@ function updateSign(val) {
   flag = 0;
   temp = [];
   sign.push(val);
-  display.textContent += ` ${sign[sign.length - 1]} `;
+  displayOne.textContent += ` ${sign[sign.length - 1]} `;
 }
 
 function clearAll() {
   values = [];
   sign = [];
   ans = 0;
+  displayOne.textContent = 0;
+  displayTwo.textContent = "";
 }
 
 let flag = -1;
 
 function deleteElement() {
   if (flag == -1) return;
+  if (temp.length == 0 && sign.length == 0) {
+    displayOne.textContent = "00";
+    displayTwo.textContent = "";
+  }
+
   if (flag) {
     temp.pop();
-    display.textContent = display.textContent.slice(
+    displayOne.textContent = displayOne.textContent.slice(
       0,
-      display.textContent.length - 1
+      displayOne.textContent.length - 1
     );
   } else {
     sign.pop();
-    display.textContent = display.textContent.slice(
+    displayOne.textContent = displayOne.textContent.slice(
       0,
-      display.textContent.length - 1
+      displayOne.textContent.length - 1
     );
   }
 }
@@ -119,8 +129,8 @@ zeroBtn.addEventListener("click", (e) => pushValue(0));
 pointBtn.addEventListener("click", (e) => pushValue("."));
 adBtn.addEventListener("click", (e) => updateSign("+"));
 subBtn.addEventListener("click", (e) => updateSign("-"));
-multiplyBtn.addEventListener("click", (e) => updateSign("*"));
-divideBtn.addEventListener("click", (e) => updateSign("/"));
+multiplyBtn.addEventListener("click", (e) => updateSign("x"));
+divideBtn.addEventListener("click", (e) => updateSign("÷"));
 clearBtn.addEventListener("click", (e) => clearAll());
 deleteBtn.addEventListener("click", (e) => deleteElement());
 
@@ -136,10 +146,13 @@ equalBtn.addEventListener("click", (e) => {
     console.log("after : " + values);
   }
 
-  display.textContent += ` = ${values[0]}`;
+  if (values[0] == Math.round(values[0]))
+    displayTwo.textContent += ` = ${values[0]}`;
+  else displayTwo.textContent += ` = ${values[0].toFixed(4)}`;
   ansFlag = 1;
   values = [];
   sign = [];
+  temp = [];
 });
 
 let copyRight = document.querySelector(".copyright");
