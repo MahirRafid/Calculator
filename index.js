@@ -91,8 +91,19 @@ let flag = -1;
 
 function deleteElement() {
   if (flag == -1) return;
-  if (flag) temp.pop();
-  sign.pop();
+  if (flag) {
+    temp.pop();
+    display.textContent = display.textContent.slice(
+      0,
+      display.textContent.length - 1
+    );
+  } else {
+    sign.pop();
+    display.textContent = display.textContent.slice(
+      0,
+      display.textContent.length - 1
+    );
+  }
 }
 
 oneBtn.addEventListener("click", (e) => pushValue(1));
@@ -133,5 +144,5 @@ equalBtn.addEventListener("click", (e) => {
 
 let copyRight = document.querySelector(".copyright");
 let currentYear = new Date().getFullYear();
-console.log(currentYear);
+// console.log(currentYear);
 copyRight.innerHTML = `<p>Copyright&nbsp;&nbsp;©&nbsp;&nbsp;Mahir Mosleh&nbsp;&nbsp;${currentYear}</p>`;
