@@ -47,7 +47,7 @@ let ansFlag = 0;
 
 function pushValue(val) {
   temp.push(val);
-  flag = 1;
+  flag.push(1);
   if (ansFlag) {
     displayOne.textContent = "";
     displayTwo.textContent = "";
@@ -76,9 +76,11 @@ function operate(sign) {
 }
 
 function updateSign(val) {
-  temp = +temp.join("");
-  values.push(temp);
-  flag = 0;
+  if (temp.length) {
+    temp = +temp.join("");
+    values.push(temp);
+  }
+  flag.push(0);
   temp = [];
   sign.push(val);
   displayOne.textContent += ` ${sign[sign.length - 1]} `;
@@ -88,31 +90,39 @@ function clearAll() {
   values = [];
   sign = [];
   ans = 0;
-  displayOne.textContent = 0;
+  displayOne.textContent = "";
   displayTwo.textContent = "";
 }
 
-let flag = -1;
+let flag = [];
 
 function deleteElement() {
-  if (flag == -1) return;
+  // console.log("Before : " + flag);
+  let l = flag.length;
+  if (l == 0) return;
   if (temp.length == 0 && sign.length == 0) {
-    displayOne.textContent = "00";
+    displayOne.textContent = "";
     displayTwo.textContent = "";
   }
 
-  if (flag) {
+  if (flag[l - 1]) {
     temp.pop();
     displayOne.textContent = displayOne.textContent.slice(
       0,
       displayOne.textContent.length - 1
     );
+    flag.pop();
+    // console.log("AfterOne : " + flag);
   } else {
     sign.pop();
-    displayOne.textContent = displayOne.textContent.slice(
-      0,
-      displayOne.textContent.length - 1
-    );
+    for (let i = 0; i < 3; i++) {
+      displayOne.textContent = displayOne.textContent.slice(
+        0,
+        displayOne.textContent.length - 1
+      );
+    }
+    flag.pop();
+    // console.log("AfterTwo : " + flag);
   }
 }
 
@@ -137,13 +147,13 @@ deleteBtn.addEventListener("click", (e) => deleteElement());
 equalBtn.addEventListener("click", (e) => {
   updateLastValue(temp);
   temp = [];
-  console.log(values);
-  console.log(sign);
+  // console.log(values);
+  // console.log(sign);
   let len = sign.length;
   for (let i = 0; i < len; i++) {
-    console.log("before : " + values);
+    // console.log("before : " + values);
     operate(sign[i]);
-    console.log("after : " + values);
+    // console.log("after : " + values);
   }
 
   if (values[0] == Math.round(values[0]))
@@ -153,6 +163,7 @@ equalBtn.addEventListener("click", (e) => {
   values = [];
   sign = [];
   temp = [];
+  flag = [];
 });
 
 let copyRight = document.querySelector(".copyright");
